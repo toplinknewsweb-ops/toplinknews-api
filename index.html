@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Top Link News • National & International • Local News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    :root {
+      --red:    #c00018;
+      --black:  #0a0a0a;
+      --ink:    #1a1a1a;
+      --gray:   #444;
+      --silver: #999;
+      --rule:   #ccc;
+      --bg:     #f5f2ec;
+      --paper:  #fdfaf5;
+      --ad-bg:  #f0ede6;
+    }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--red); text-decoration: underline; }
+
+    /* ─── TOP BAR ─── */
+    .top-bar {
+      background: var(--black);
+      color: #bbb;
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 18px;
+    }
+
+    .top-bar a { color: #bbb; }
+    .top-bar a:hover { color: #fff; text-decoration: none; }
+
+    /* ─── MASTHEAD ─── */
+    .masthead {
+      background: var(--paper);
+      border-bottom: 4px double var(--black);
+      text-align: center;
+      padding: 18px 16px 14px;
+    }
+
+    .masthead-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(38px, 9vw, 82px);
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: -1px;
+      line-height: 1;
+      display: block;
+    }
+
+    .masthead-rule {
+      border: none;
+      border-top: 2px solid var(--black);
+      margin: 8px auto 6px;
+      max-width: 700px;
+    }
+
+    .masthead-tagline {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(11px, 2.5vw, 15px);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .masthead-meta {
+      font-size: 12px;
+      color: var(--silver);
+      margin-top: 6px;
+    }
+
+    .refresh-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--black);
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: none;
+      padding: 8px 20px;
+      cursor: pointer;
+      min-height: 40px;
+      touch-action: manipulation;
+      -webkit-appearance: none;
+      transition: background 0.15s;
+    }
+
+    .refresh-btn:hover, .refresh-btn:active { background: var(--red); }
+
+    /* ─── AD LEADERBOARD (top) ─── */
+    .ad-leaderboard {
+      background: var(--ad-bg);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      text-align: center;
+      padding: 10px 12px;
+    }
+
+    .ad-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--silver);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .ad-banner {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      border: 2px dashed #bbb;
+      background: #fff;
+      color: var(--gray);
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      width: 100%;
+      max-width: 728px;
+      height: 60px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .ad-banner:hover { border-color: var(--red); color: var(--red); }
+    .ad-banner strong { font-size: 15px; display: block; }
+
+    /* ─── BREAKING SPLASH ─── */
+    .splash-section {
+      background: var(--paper);
+      border-bottom: 3px solid var(--black);
+      padding: 20px 16px 18px;
+      text-align: center;
+    }
+
+    .siren {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .siren::before, .siren::after {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: blink 1s infinite;
+    }
+
+    .siren::after { animation-delay: 0.5s; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.15; }
+    }
+
+    .splash-headline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(22px, 5.5vw, 48px);
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--black);
+      max-width: 860px;
+      margin: 0 auto 10px;
+      display: block;
+      text-decoration: none;
+    }
+
+    .splash-headline:hover { color: var(--red); text-decoration: none; }
+
+    .splash-sub {
+      font-size: clamp(13px, 2.5vw, 16px);
+      color: var(--gray);
+      max-width: 640px;
+      margin: 0 auto 10px;
+      line-height: 1.5;
+    }
+
+    .splash-source {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--silver);
+    }
+
+    /* ─── MAIN GRID ─── */
+    .main-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 12px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 2px 1fr 2px 1fr;
+      gap: 0;
+      background: var(--paper);
+      border-left: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+    }
+
+    .col-divider {
+      background: var(--rule);
+      width: 1px;
+      margin: 20px 0;
+      align-self: stretch;
+    }
+
+    .news-col {
+      padding: 20px 20px;
+      min-width: 0;
+    }
+
+    .col-heading {
+      font-family: 'Oswald', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--silver);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 6px;
+      margin-bottom: 14px;
+    }
+
+    /* ─── HEADLINES ─── */
+    .headline-link {
+      display: block;
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(14px, 2.2vw, 16px);
+      font-weight: 600;
+      color: var(--black);
+      line-height: 1.4;
+      padding: 9px 0;
+      border-bottom: 1px dotted var(--rule);
+      min-height: 44px;
+      transition: color 0.1s;
+      cursor: pointer;
+    }
+
+    .headline-link:hover { color: var(--red); text-decoration: none; }
+    .headline-link:active { color: var(--red); }
+    .headline-link:last-child { border-bottom: none; }
+
+    .no-headlines {
+      font-size: 13px;
+      color: var(--silver);
+      font-style: italic;
+      padding: 8px 0;
+      display: block;
+    }
+
+    /* ─── CENTER COLUMN AD ─── */
+    .center-col {
+      padding: 20px 16px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ad-tile {
+      border: 2px dashed #bbb;
+      background: var(--ad-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px 12px;
+      min-height: 130px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .ad-tile:hover { border-color: var(--red); background: #fff; }
+    .ad-tile:hover .ad-tile-title { color: var(--red); }
+
+    .ad-tile-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 6px;
+    }
+
+    .ad-tile-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--gray);
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .ad-tile-sub {
+      font-size: 11px;
+      color: var(--silver);
+      margin-top: 4px;
+    }
+
+    /* ─── FULL-WIDTH AD STRIP ─── */
+    .ad-strip {
+      background: var(--ad-bg);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .ad-strip-slot {
+      border: 2px dashed #bbb;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray);
+      cursor: pointer;
+      padding: 10px 16px;
+      min-height: 70px;
+      flex: 1;
+      min-width: 220px;
+      max-width: 340px;
+      transition: border-color 0.2s;
+    }
+
+    .ad-strip-slot:hover { border-color: var(--red); color: var(--red); }
+    .ad-strip-slot strong { font-size: 14px; display: block; margin-bottom: 2px; }
+
+    /* ─── MAP ─── */
+    .map-section {
+      background: var(--paper);
+      border-top: 3px double var(--black);
+      border-bottom: 3px double var(--black);
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(18px, 4vw, 28px);
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-bottom: 16px;
+    }
+
+    /* ─── EXTRAS ─── */
+    .extras-section {
+      background: var(--bg);
+      padding: 24px 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-top: 16px;
+    }
+
+    .extra-card {
+      background: var(--paper);
+      padding: 16px 14px;
+      cursor: pointer;
+      touch-action: manipulation;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+
+    .extra-card:hover { background: var(--black); color: #fff; }
+    .extra-card:hover .extra-card-title { color: #fff; }
+    .extra-card:active { background: var(--red); }
+
+    .extra-card-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .extra-card-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--black);
+      transition: color 0.15s;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      color: #777;
+      text-align: center;
+      padding: 20px 16px env(safe-area-inset-bottom, 16px);
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    footer a { color: #aaa; }
+    footer a:hover { color: #fff; text-decoration: none; }
+
+    /* ════════════════════════════════════
+       TABLET  ≤ 1024px
+    ════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr 2px 1fr;
+      }
+      /* Hide center (ad) column and its divider on tablet */
+      .center-col        { display: none; }
+      .divider-after-left { display: none; }
+
+    }
+
+    /* ════════════════════════════════════
+       MOBILE  ≤ 680px
+    ════════════════════════════════════ */
+    @media (max-width: 680px) {
+      .top-bar { font-size: 10px; padding: 5px 12px; }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+        border-left: none;
+        border-right: none;
+      }
+
+      .col-divider { display: none; }
+
+      .news-col { padding: 16px 12px; }
+
+      /* Show center ad col again but full-width under news */
+      .center-col {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px;
+        border-top: 1px solid var(--rule);
+        order: 10;
+      }
+
+      .ad-tile {
+        flex: 1;
+        min-width: 140px;
+        min-height: 90px;
+      }
+
+      .ad-strip { flex-direction: column; gap: 8px; }
+      .ad-strip-slot { max-width: 100%; min-width: unset; }
+
+
+      .extras-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .extras-grid { grid-template-columns: 1fr; }
+      .masthead-name { letter-spacing: -0.5px; }
+    }
+
+    /* ─── STATE GRID ─── */
+    .state-grid-wrap {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .state-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .state-btn {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--rule);
+      padding: 8px 10px;
+      min-width: 48px;
+      min-height: 44px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .state-btn:hover {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      text-decoration: none;
+    }
+
+    .state-btn:active {
+      background: var(--black);
+      border-color: var(--black);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── TOP BAR ── -->
+  <div class="top-bar">
+    <span id="live-date">Loading...</span>
+    <span>
+      <a href="/cdn-cgi/l/email-protection#5b3a3f2d3e292f32283e1b2f342b37323530353e2c2875383436">Advertise</a>
+      &nbsp;|&nbsp;
+      <a href="/cdn-cgi/l/email-protection#12667b626152667d627e7b7c797c7765613c717d7f">News Tips</a>
+    </span>
+  </div>
+
+  <!-- ── MASTHEAD ── -->
+  <header class="masthead">
+    <span class="masthead-name">Top Link News</span>
+    <hr class="masthead-rule">
+    <div class="masthead-tagline">National &amp; International &nbsp;•&nbsp; Tap Map for Local News</div>
+    <div class="masthead-meta" id="last-refreshed">Loading live data&hellip;</div>
+    <button class="refresh-btn" onclick="refreshAll()">&#x1F504; Refresh Now</button>
+  </header>
+
+  <!-- ── TOP LEADERBOARD AD ── -->
+  <div class="ad-leaderboard">
+    <span class="ad-label">Advertisement</span>
+    <div class="ad-banner" onclick="alert('Contact advertise@toplinknews.com')">
+      <strong>Advertise Your Business Here</strong>
+      Premium Top Banner &bull; 728&times;90 &bull; Contact Us Today
+    </div>
+  </div>
+
+  <!-- ── BREAKING SPLASH ── -->
+  <section class="splash-section">
+    <div class="siren">Breaking News</div>
+    <a id="splash-link" class="splash-headline" href="https://www.npr.org/sections/national/" target="_blank" rel="noopener">
+      U.S. BLOCKADES STRAIT OF HORMUZ AFTER IRAN CEASEFIRE TALKS COLLAPSE
+    </a>
+    <p class="splash-sub">
+      The U.S. Central Command announced a naval blockade enforced against vessels of all nations beginning Monday at 10 a.m. EDT, following the breakdown of 21 hours of negotiations between Washington and Tehran.
+    </p>
+    <span class="splash-source">APR 13, 2026 &nbsp;&bull;&nbsp; Source: NPR / AP</span>
+  </section>
+
+  <!-- ── THREE-COLUMN NEWS GRID ── -->
+  <div class="main-wrap">
+    <div class="main-grid">
+
+      <!-- LEFT: National -->
+      <div class="news-col" style="order:1">
+        <div class="col-heading">National Headlines &nbsp;·&nbsp; NPR</div>
+        <div id="left-column"></div>
+      </div>
+
+      <div class="col-divider" style="order:2"></div>
+
+      <!-- CENTER: Ads -->
+      <div class="center-col" style="order:3">
+        <div class="col-heading" style="width:100%">Sponsored</div>
+
+        <div class="ad-tile" onclick="alert('Contact advertise@toplinknews.com')">
+          <div class="ad-tile-label">Advertisement</div>
+          <div class="ad-tile-title">Advertise Your Business Here</div>
+          <div class="ad-tile-sub">Premium Center Placement</div>
+        </div>
+
+        <div class="ad-tile" onclick="alert('Contact advertise@toplinknews.com')">
+          <div class="ad-tile-label">Advertisement</div>
+          <div class="ad-tile-title">Advertise Your Business Here</div>
+          <div class="ad-tile-sub">Reach Thousands Daily</div>
+        </div>
+
+        <div class="ad-tile" onclick="alert('Contact advertise@toplinknews.com')">
+          <div class="ad-tile-label">Advertisement</div>
+          <div class="ad-tile-title">Advertise Your Business Here</div>
+          <div class="ad-tile-sub">Banner or Custom Placement</div>
+        </div>
+
+        <div class="ad-tile" onclick="alert('Contact advertise@toplinknews.com')">
+          <div class="ad-tile-label">Advertisement</div>
+          <div class="ad-tile-title">Advertise Your Business Here</div>
+          <div class="ad-tile-sub">Local &amp; National Slots Available</div>
+        </div>
+      </div>
+
+      <div class="col-divider divider-after-left" style="order:4"></div>
+
+      <!-- RIGHT: International -->
+      <div class="news-col" style="order:5">
+        <div class="col-heading">International Headlines &nbsp;·&nbsp; BBC</div>
+        <div id="right-column"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── WIDE AD STRIP ── -->
+  <div class="ad-strip">
+    <div class="ad-strip-slot" onclick="alert('Contact advertise@toplinknews.com')">
+      <strong>Your Ad Here</strong>Premium Sponsor Slot
+    </div>
+    <div class="ad-strip-slot" onclick="alert('Contact advertise@toplinknews.com')">
+      <strong>Your Ad Here</strong>Premium Sponsor Slot
+    </div>
+    <div class="ad-strip-slot" onclick="alert('Contact advertise@toplinknews.com')">
+      <strong>Your Ad Here</strong>Premium Sponsor Slot
+    </div>
+  </div>
+
+  <!-- ── STATE GRID ── -->
+  <section class="map-section">
+    <div class="section-heading">Local News by State &amp; D.C.</div>
+    <div class="section-sub">Tap or Click Your State for Local Coverage</div>
+    <div class="state-grid-wrap">
+      <div class="state-grid" id="state-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── LIVE EXTRAS ── -->
+  <section class="extras-section">
+    <div class="section-heading">Live Extras</div>
+    <div class="section-sub">Tap for More</div>
+    <div class="extras-grid">
+      <div class="extra-card" onclick="window.open('weather.html','_blank')">
+        <span class="extra-card-icon">&#x1F324;&#xFE0F;</span>
+        <span class="extra-card-title">Local Weather</span>
+      </div>
+      <div class="extra-card" onclick="window.open('sports.html','_blank')">
+        <span class="extra-card-icon">&#x1F3C8;</span>
+        <span class="extra-card-title">Sports</span>
+      </div>
+      <div class="extra-card" onclick="window.open('technology.html','_blank')">
+        <span class="extra-card-icon">&#x1F4BB;</span>
+        <span class="extra-card-title">Technology</span>
+      </div>
+      <div class="extra-card" onclick="window.open('economy.html','_blank')">
+        <span class="extra-card-icon">&#x1F4C8;</span>
+        <span class="extra-card-title">Economy &amp; Markets</span>
+      </div>
+      <div class="extra-card" onclick="window.open('diet.html','_blank')">
+        <span class="extra-card-icon">&#x1F957;</span>
+        <span class="extra-card-title">Diet &amp; Nutrition</span>
+      </div>
+      <div class="extra-card" onclick="window.open('wellness.html','_blank')">
+        <span class="extra-card-icon">&#x1F9D8;</span>
+        <span class="extra-card-title">Wellness</span>
+      </div>
+      <div class="extra-card" onclick="window.open('betting.html','_blank')">
+        <span class="extra-card-icon">&#x1F3B0;</span>
+        <span class="extra-card-title">Betting Markets</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER AD + COPYRIGHT ── -->
+  <div class="ad-strip" style="border-top:2px solid #000;">
+    <div class="ad-strip-slot" onclick="alert('Contact advertise@toplinknews.com')">
+      <strong>Footer Sponsor</strong>Your Ad Here
+    </div>
+    <div class="ad-strip-slot" onclick="alert('Contact advertise@toplinknews.com')">
+      <strong>Footer Sponsor</strong>Your Ad Here
+    </div>
+  </div>
+
+  <footer>
+    <div>&copy; <span id="yr"></span> Top Link News &nbsp;|&nbsp;
+      <a href="/cdn-cgi/l/email-protection#5031342635222439233510243f203c393e3b3e3527237e333f3d">Advertise</a> &nbsp;|&nbsp;
+      <a href="/cdn-cgi/l/email-protection#413528313201352e312d282f2a2f2436326f222e2c">News Tips</a> &nbsp;|&nbsp;
+      <a href="#">Privacy</a>
+    </div>
+    <div style="margin-top:6px;font-size:10px;color:#555;">
+      All content linked to original sources. Top Link News is a news aggregator.
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    /* ── DATE / TIME ── */
+    function updateClock() {
+      const now = new Date();
+      const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+      const time = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+      document.getElementById('live-date').textContent =
+        now.toLocaleDateString('en-US', opts) + ' \u2022 ' + time;
+      document.getElementById('yr').textContent = now.getFullYear();
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    /* ── HEADLINES ── */
+    /* ─────────────────────────────────────────────────────────────────
+       Fetches headlines from your Node.js API hosted on Render.com.
+       IMPORTANT: After deploying to Render, replace the URL below
+       with your actual Render service URL.
+    ─────────────────────────────────────────────────────────────── */
+    const API_URL = 'https://YOUR-RENDER-URL.onrender.com/api/headlines';
+
+    function populateColumn(id, items) {
+      const col = document.getElementById(id);
+      col.innerHTML = '';
+      if (!items || !items.length) {
+        col.innerHTML = '<span class="no-headlines">No headlines available.</span>';
+        return;
+      }
+      items.forEach(function(item) {
+        const a = document.createElement('a');
+        a.href        = item.link;
+        a.target      = '_blank';
+        a.rel         = 'noopener noreferrer';
+        a.className   = 'headline-link';
+        a.textContent = item.title;
+        col.appendChild(a);
+      });
+    }
+
+    async function loadHeadlines() {
+      const stamp = document.getElementById('last-refreshed');
+      stamp.textContent = 'Loading headlines…';
+      try {
+        const res  = await fetch(API_URL);
+        if (!res.ok) throw new Error('bad response');
+        const data = await res.json();
+        populateColumn('left-column',  data.headlines.left    || []);
+        populateColumn('right-column', data.headlines.right   || []);
+        stamp.textContent = 'Updated ' + new Date().toLocaleTimeString();
+      } catch(e) {
+        stamp.textContent = 'Could not load headlines.';
+        ['left-column','right-column'].forEach(function(id) {
+          document.getElementById(id).innerHTML =
+            '<span class="no-headlines">Could not reach news server.</span>';
+        });
+      }
+    }
+
+    function refreshAll() { loadHeadlines(); }
+
+    /* ─── STATE DATA ─── */
+    const STATES = [
+      ['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],
+      ['CA','California'],['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],
+      ['FL','Florida'],['GA','Georgia'],['HI','Hawaii'],['ID','Idaho'],
+      ['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],
+      ['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],
+      ['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],
+      ['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],
+      ['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],
+      ['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],
+      ['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],
+      ['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['UT','Utah'],
+      ['VT','Vermont'],['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],
+      ['WI','Wisconsin'],['WY','Wyoming'],['DC','Washington D.C.']
+    ];
+
+    /* Build a lookup: any variation → 2-letter lowercase code */
+    const STATE_LOOKUP = {};
+    STATES.forEach(([code, name]) => {
+      STATE_LOOKUP[code.toLowerCase()] = code.toLowerCase();
+      STATE_LOOKUP[name.toLowerCase()] = code.toLowerCase();
+    });
+    /* Common abbreviation aliases */
+    Object.assign(STATE_LOOKUP, {
+      'd.c.':'dc','district of columbia':'dc','washington dc':'dc','washington d.c.':'dc',
+      'n.y.':'ny','n.j.':'nj','n.c.':'nc','n.d.':'nd','s.c.':'sc','s.d.':'sd',
+      'w.va.':'wv','w.v.':'wv','r.i.':'ri','n.h.':'nh','n.m.':'nm',
+      'conn.':'ct','mass.':'ma','miss.':'ms','minn.':'mn','mich.':'mi',
+      'wisc.':'wi','penn.':'pa','calif.':'ca','colo.':'co','okla.':'ok',
+      'ore.':'or','tenn.':'tn','tex.':'tx','ariz.':'az','ark.':'ar',
+      'ala.':'al','fla.':'fl','ill.':'il','ind.':'in','kans.':'ks',
+      'mont.':'mt','neb.':'ne','ky.':'ky','la.':'la','vt.':'vt','va.':'va',
+      'me.':'me','md.':'md','mo.':'mo','wa.':'wa','wyo.':'wy'
+    });
+
+    function resolveState(raw) {
+      if (!raw) return null;
+      const key = raw.trim().toLowerCase().replace(/\s+/g, ' ');
+      return STATE_LOOKUP[key] || null;
+    }
+
+    function goToState(code) {
+      if (code) window.open(code + '.html', '_blank');
+    }
+
+    /* ─── STATE BUTTON GRID ─── */
+    function buildStateGrid() {
+      const grid = document.getElementById('state-grid');
+      if (!grid) return;
+      STATES.forEach(([code, name]) => {
+        const a = document.createElement('a');
+        a.href      = code.toLowerCase() + '.html';
+        a.target    = '_blank';
+        a.rel       = 'noopener noreferrer';
+        a.className = 'state-btn';
+        a.title     = name;
+        a.textContent = code;
+        grid.appendChild(a);
+      });
+    }
+
+    window.addEventListener('load', function() {
+      loadHeadlines();
+      setInterval(loadHeadlines, 10 * 60 * 1000);
+      buildStateGrid();
+    });
+  </script>
+</body>
+</html>
