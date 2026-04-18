@@ -1,0 +1,20 @@
+{
+  "name": "toplinknews-api",
+  "version": "2.0.0",
+  "description": "Top Link News – RSS headline aggregator API (breaking, national, international, local)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "fast-xml-parser": "^4.4.1"
+  },
+  "keywords": ["news", "rss", "aggregator"],
+  "license": "ISC"
+}
