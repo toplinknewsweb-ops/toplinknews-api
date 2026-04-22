@@ -1,0 +1,60 @@
+services:
+  - type: web
+    name: toplinknews-api
+    runtime: node
+    plan: free          # ← upgrade to 'starter' ($7/mo) to eliminate cold starts
+    region: oregon
+    branch: main
+    autoDeploy: true    # redeploys automatically on every GitHub push
+
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+
+    # Render pings this path every 30 s to confirm the service is alive
+    healthCheckPath: /health
+
+    envVars:
+
+      # ── Runtime ────────────────────────────────────────────────────────────
+      - key: NODE_ENV
+        value: production
+
+      - key: NODE_VERSION
+        value: 20.11.0
+
+      # ── Cache TTL (milliseconds) ────────────────────────────────────────────
+      # How long each payload is served before a background refresh fires.
+      # 600000 = 10 minutes.  Lower = fresher news, more upstream RSS calls.
+      - key: CACHE_TTL_MS
+        value: "600000"
+
+      # ── Per-feed HTTP timeout (milliseconds) ───────────────────────────────
+      # Each individual RSS fetch will abort after this many ms.
+      - key: FETCH_TIMEOUT
+        value: "9000"
+
+# ─── FREE TIER NOTE ────────────────────────────────────────────────────────────
+# Render's free plan suspends the service after 15 minutes of inactivity,
+# causing a 30–60 second cold start on the next request.
+#
+# To prevent this, choose ONE of:
+#   A) Upgrade to Starter plan ($7/mo) — service stays always-on.
+#   B) Use a free external cron pinger to keep it warm:
+#        https://cron-job.org  →  ping  https://toplinknews-api.onrender.com/health
+#        every 10 minutes.
+#
+# ─── ENDPOINTS SERVED BY THIS API ─────────────────────────────────────────────
+#   GET  /api/headlines               → national + international + local news
+#   GET  /api/headlines?state=fl      → Florida news  (all 51 regions supported)
+#   GET  /api/topic?t=sports          → sports page feeds
+#   GET  /api/topic?t=economy         → economy page feeds
+#   GET  /api/topic?t=technology      → technology page feeds
+#   GET  /api/topic?t=betting         → betting page feeds
+#   GET  /api/topic?t=diet            → diet & nutrition page feeds
+#   GET  /api/topic?t=wellness        → wellness page feeds
+#   GET  /api/topic?t=ai              → artificial intelligence page feeds
+#   POST /api/refresh                 → bust national cache
+#   POST /api/refresh?state=fl        → bust one state cache
+#   POST /api/refresh?topic=sports    → bust one topic cache
+#   GET  /api/status                  → cache age report for all regions + topics
+#   GET  /health                      → Render health check
