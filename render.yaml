@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: toplinknews
+    runtime: node
+    region: oregon          # change to: ohio, virginia, frankfurt, singapore, or ohio
+    plan: free              # upgrade to starter ($7/mo) for always-on (no spin-down)
+    branch: main            # or master — whichever your GitHub default branch is
+
+    buildCommand: npm install
+    startCommand: npm start
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+
+    # Auto-deploy on every push to the branch above
+    autoDeploy: true
+
+    # Health check — Render pings this to confirm the service is up
+    healthCheckPath: /
+
+    # Optional: custom domain
+    # domains:
+    #   - toplinknews.com
+    #   - www.toplinknews.com
